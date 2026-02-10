@@ -1,3 +1,12 @@
+import drizzleSrc from '../assets/images/icon-drizzle.webp';
+import fogSrc from '../assets/images/icon-fog.webp';
+import overcastSrc from '../assets/images/icon-overcast.webp';
+import partlyCloudySrc from '../assets/images/icon-partly-cloudy.webp';
+import rainSrc from '../assets/images/icon-rain.webp';
+import snowSrc from '../assets/images/icon-snow.webp';
+import stormSrc from '../assets/images/icon-storm.webp';
+import sunnySrc from '../assets/images/icon-sunny.webp';
+
 export default class templateBuilder {
     constructor() {
         this.weatherTodayContainer = document.querySelector(".weather-today");
@@ -7,6 +16,16 @@ export default class templateBuilder {
         this.precipatationContainer = document.querySelector("#precipatation");
         this.dailyForecastContainers = document.querySelectorAll(".day__content");
         this.hourlyForecastContainer = document.querySelector(".hourly-weather__hours-container");
+        this.icons = {
+            'drizzle': drizzleSrc,
+            'fog': fogSrc,
+            'overcast': overcastSrc,
+            'partly-cloudy': partlyCloudySrc,
+            'rain': rainSrc,
+            'snow': snowSrc,
+            'storm': stormSrc,
+            'sunny': sunnySrc
+        }
     }
     fillData(data) {
         this.city = data.city;
@@ -58,7 +77,7 @@ export default class templateBuilder {
             </div>
             <div class="weather-today__temperature-box">
                 <div class="weather-today__icon">
-                    <img src="./src/assets/images/icon-${this.weather}.webp" alt="${this.weather} icon">
+                    <img src="${this.icons[this.weather]}" alt="${this.weather} icon">
                 </div>
                 <span class="weather-today__temperature" id="temperature">${this.temperature}&deg;C</span>
             </div>
@@ -75,7 +94,7 @@ export default class templateBuilder {
     constructDailyForecast() {
         this.weeklyWeather.forEach((day, ind) => {
             const template = `
-                <img src="./src/assets/images/icon-${day.weather}.webp" class="day__weather-icon" alt="${day.weather} icon">
+                <img src="${this.icons[day.weather]}" class="day__weather-icon" alt="${day.weather} icon">
                 <div class="day__temperatures">
                     <span class="day__temperature-day">${day.temperatures[0]}&deg;</span>
                     <span class="day__temperature-evening">${day.temperatures[1]}&deg;</span>
@@ -91,7 +110,7 @@ export default class templateBuilder {
             const li = document.createElement('li');
             li.classList.add("weather-current-hour", "hourly-weather__hours-item");
             const template = `
-                <img src="./src/assets/images/icon-${el.weather}.webp" alt="${el.weather} icon" class="weather-current-hour__icon">
+                <img src="${this.icons[el.weather]}" alt="${el.weather} icon" class="weather-current-hour__icon">
                 <span class="weather-current-hour__time">${ind} ${ind < 12 ? 'AM' : 'PM'}</span>
                 <span class="weather-current-hour__temperature">${el.temperature}&deg;</span>
             `;
