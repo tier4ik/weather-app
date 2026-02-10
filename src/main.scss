@@ -1,0 +1,32 @@
+@use 'styles/normalize';
+
+// Fonts
+@use 'styles/fonts';
+
+// Variables
+@use 'styles/variables';
+
+// Mixins
+@use 'styles/mixins';
+
+@use 'styles/header/header';
+@use 'styles/main/main';
+
+html {
+    background-color: variables.$color-neutral-900;
+    font-size: variables.$main-font-size;
+    font-family: variables.$main-font;
+    color: #fff;
+    font-weight: 300;
+}
+
+.container {
+    width: 100%;
+    min-width: 375px;
+    max-width: 1440px;
+    margin: 0px auto;
+    padding: 1rem;
+    @include mixins.media-md {
+        padding: 2rem 4rem;
+    }
+}

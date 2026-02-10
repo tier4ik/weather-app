@@ -1,0 +1,394 @@
+@use '../variables';
+@use '../mixins';
+.main {
+    padding: 2rem 0;
+}
+.header {
+    font-family: variables.$secondary-font;
+    text-align: center;
+    font-size: 3.6rem;
+    line-height: 4.5rem;
+    margin-bottom: 2.5rem;
+}
+.search {
+    @include mixins.media-md {
+        width: 655px;
+        margin: auto;
+        display: flex;
+        gap: 1rem;
+    }
+    &__input-container {
+        display: flex;
+        padding: 1rem;
+        background-color: variables.$color-neutral-800;
+        border-radius: .5rem;
+        margin-bottom: .8rem;
+        &:focus-within {
+            outline: 1px solid #fff;
+            outline-offset: 2px;
+        }
+        @include mixins.media-md {
+            flex-grow: 1;
+        }
+    }
+    &__input {
+        flex-grow: 1;
+        padding-left: 1rem;
+        color: inherit;
+        background-color: transparent;
+        border: none;
+        &::placeholder {
+            color: inherit;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+    &__btn {
+        width: 100%;
+        padding: 1rem;
+        background-color: variables.$color-blue-500;
+        border: none;
+        border-radius: .5rem;
+        color: inherit;
+        &:active {
+            outline: 1px solid variables.$color-blue-500;
+            outline-offset: 2px;
+        }
+        @include mixins.media-md {
+            width: 115px;
+            height: 100%;
+        }
+        @include mixins.has-hover {
+            &:hover {
+                background-color: variables.$color-blue-700;
+            }
+        }
+    }
+}
+.weather-box {
+    display: grid;
+    grid-template-columns: 70% auto;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    @include mixins.media-md {
+        padding: 1rem 0;
+    }
+}
+.daily-weather {
+    grid-column: 1 / 3;
+    @include mixins.media-xl {
+        grid-column: 1 / 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+.weather-today {
+    min-height: 242px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border-radius: 1.5rem;
+    background-image: url(../../assets/images/bg-today-small.svg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    @include mixins.media-md {
+        background-image: url(../../assets/images/bg-today-large.svg);
+    }
+    &_loading {
+        background-image: none;
+        justify-content: center;
+        background-color: variables.$color-neutral-800;
+    }
+    &__location {
+        display: block;
+        margin-bottom: 0.2rem;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.4rem;
+    }
+    &__date {
+        display: block;
+        color: variables.$color-neutral-200;
+        text-align: center;
+        font-size: .9rem;
+    }
+    &__temperature-box {
+        display: flex;
+        gap: .5rem;
+        align-items: center;
+    }
+    &__icon {
+        width: 60px;
+        height: 60px;
+        & > img {
+            transform: scale(2);
+        }
+    }
+    &__temperature {
+        font-family: variables.$secondary-font;
+        font-weight: 500;
+        font-style: italic;
+        font-size: 4.5rem;
+    }
+    &__additional {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 1rem;
+        margin-block: 1.2rem;
+        @include mixins.media-md {
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 1fr;
+        }
+    }
+}
+.feels-like {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1rem .8rem;
+    background-color: variables.$color-neutral-800;
+    border: 1px solid variables.$color-neutral-600;
+    border-radius: 1rem;
+    &__title {
+        @include mixins.media-md {
+            font-size: 1.2rem;
+        }
+    }
+    &__content {
+        font-weight: 200;
+        font-size: 1.8rem;
+        &:empty::after {
+            content: '';
+            display: block;
+            position: relative;
+            left: 0;
+            width: 20px;
+            height: 2px;
+            margin-top: 20px;
+            background-color: #fff;
+            animation-name: slide;
+            animation-timing-function: ease;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        @include mixins.media-md {
+            margin-top: 1rem;
+        }
+    }
+}
+.daily-forecast {
+    &__header {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+    &__week {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-rows: auto;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+}
+.day {
+    min-height: 172px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 1rem .5rem;
+    background-color: variables.$color-neutral-800;
+    border: 1px solid variables.$color-neutral-600;
+    border-radius: 1rem;
+    &__content:empty::after {
+        content: '';
+        width: 30px;
+        height: 30px;
+        margin-top: 20px;
+        border: 4px solid #FFF;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        animation-name: rotation;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+    &:nth-child(1) > &__content:empty::after {
+        animation-duration: 1s;
+    }
+    &:nth-child(2) > &__content:empty::after {
+        animation-duration: 1.2s;
+    }
+    &:nth-child(3) > &__content:empty::after {
+        animation-duration: 1.4s;
+    }
+    &:nth-child(4) > &__content:empty::after {
+        animation-duration: 1.6s;
+    }
+    &:nth-child(5) > &__content:empty::after {
+        animation-duration: 1.8s;
+    }
+    &:nth-child(6) > &__content:empty::after {
+        animation-duration: 2s;
+    }
+    &:nth-child(7) > &__content:empty::after {
+        animation-duration: 2.2s;
+    }
+    &__weather-icon {
+        width: 80px;
+        height: 80px;
+    }
+    &__temperatures {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+.hourly-weather {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 65px auto;
+    align-items: center;
+    row-gap: .5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: variables.$color-neutral-800;
+    border-radius: 1rem;
+    @include mixins.media-xl {
+        grid-column: 2 / 3;
+        margin-top: 0;
+    }
+    &__header {
+        display: inline-block;
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+    &__day-select {
+        width: 140px;
+        position: relative;
+        display: inline-block;
+        justify-self: end;
+    }
+    &__select-input {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &, &::picker(select) {
+            appearance: base-select;
+            padding: .5rem .7rem;
+            color: inherit;
+            border: none;
+            border-radius: .2rem;
+            background-color: variables.$color-neutral-600;
+            border-radius: 1rem;
+
+        }
+        &::picker(select) {
+            margin-top: .5rem;
+        }
+        &::picker-icon {
+            display: none;
+        }
+        &:open .hourly-weather__select-icon {
+            transform: rotate(90deg);
+        }
+    }
+    &__option {
+        padding: .5rem .7rem;
+    }
+    &__hours-container {
+        grid-column: span 2;
+        margin-right: -1rem;
+        overflow-y: auto;
+        &_loading {
+            overflow-y: visible;
+        }
+    }
+    &__hours-list {
+        margin-top: 1rem;
+        padding-right: 1rem;
+        height: 600px;
+        @include mixins.media-md {
+            width: 50%;
+            justify-self: center;
+        }
+        @include mixins.media-xl {
+            width: 100%;
+        }
+    }
+}
+.weather-current-hour {
+    display: flex;
+    align-items: center;
+    padding: .5rem .8rem;
+    margin-top: 1rem;
+    background-color: variables.$color-neutral-700;
+    border: 1px solid variables.$color-neutral-600;
+    border-radius: .5rem;
+    &__icon {
+        width: 40px;
+        height: 40px;
+        margin-right: .5rem;
+    }
+    &__temperature {
+        margin-left: auto;
+    }
+}
+
+.loading {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        width: 80px;
+        margin: auto;
+        & > div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+    }
+    &__ball {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background-color: #fff;
+        border-radius: 50%;
+        animation-name: jump;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-direction: alternate;
+        &_middle {
+            animation-delay: .5s;
+        }
+        &_right {
+            animation-delay: 1s;
+        }
+    }
+}
+@keyframes jump {
+    to {
+        transform: translateY(-10px);
+    }
+}
+@keyframes slide {
+    to {
+        left: calc(100% - 1rem);
+    }
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

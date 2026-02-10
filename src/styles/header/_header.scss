@@ -1,0 +1,87 @@
+@use '../variables';
+@use '../mixins';
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.units {
+    font-size: .8rem;
+    position: relative;
+    &_open > &__menu-container{
+        display: block;
+    }
+    &_open &__btn-drop-icon{
+        transform: rotate(90deg);
+    }
+    &__btn {
+        margin-left: auto;
+        display: flex;
+        padding: .4rem .6rem;
+        background-color: variables.$color-neutral-800;
+        color: inherit;
+        border: none;
+        border-radius: .5rem;
+        user-select: none;
+        @include mixins.has-hover {
+            &:hover {
+               background-color: variables.$color-neutral-600; 
+            }
+        }
+    }
+    &__btn-title {
+        margin-inline: .4rem;
+    }
+    &__title {
+        padding: .5rem;
+    }
+    &__menu-container {
+        z-index: 999;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        display: none;
+        width: 214px;
+        padding: .6rem .5rem 0;
+        background-color: variables.$color-neutral-800;
+        border-radius: .5rem;
+    }
+}
+
+.submenu {
+    margin-top: .5rem;
+    &:not(:last-child) {
+        border-bottom: 1px solid variables.$color-neutral-600;
+    }
+    &__title {
+        padding: .5rem;
+        font-size: .8rem;
+        color: variables.$color-neutral-300;
+    }
+    &__menu {
+        margin-bottom: .2rem;
+    }
+    &__item {
+        border-radius: .5rem;
+    }
+    &__item:has(:checked) {
+       background-color: variables.$color-neutral-600; 
+    }
+    &__item label {
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem;
+        -webkit-tap-highlight-color: transparent;
+    }
+    &__item input[type='radio'] {
+        display: none;
+    }
+    &__item input[type='radio']:checked + img {
+        display: block;
+    }
+    &__item img {
+        display: none;
+    }
+}
